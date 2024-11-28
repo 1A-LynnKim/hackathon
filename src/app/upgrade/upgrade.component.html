@@ -1,0 +1,126 @@
+<div class="upgrade-container">
+  <!-- Main Title -->
+  <div class="header">
+    <h1 class="main-title">Upgrade Your Flight in Real-Time</h1>
+    <app-timer [startTimeInSeconds]="24 * 60 * 60"></app-timer>
+    <p>
+      Welcome to HACKATHON AIRLINE Bid Upgrade, <span class="username">John Doe!</span> Take your travel experience to the next level with exclusive perks like priority check-in, faster boarding, additional baggage allowance, and more. Here’s how simple it is:
+    </p>
+    <ol>
+      <li>Place a bid for an upgrade on any segment of your journey and submit it.</li>
+      <li>We’ll send you an email letting you know if your bid has been accepted.</li>
+    </ol>
+    <p class="note">
+      If your bid is successful, the upgrade cost will be added to your ticket. If not, no worries—you’ll keep your original seat at no extra charge.
+    </p>
+
+
+  </div>
+
+  <!-- Offer Table -->
+  <table class="offer-table">
+    <thead>
+    <tr>
+      <th>Your Flight Information</th>
+      <th>Upgrade</th>
+      <th>Your Offer(s)</th>
+      <th>Offer Strength</th>
+      <th>Competing Bids</th>
+      <th>Upgrade Offer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Display enabled rows -->
+    <tr *ngFor="let offer of getEnabledRows()" class="offer-row">
+      <td>
+        <div class="flight-info">
+          <i class="bi bi-airplane flight-icon"></i>
+          <div>
+            <div class="flight-route">{{ offer.flight }}</div>
+            <div class="flight-details">{{ offer.flightDetails }}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="upgrade-type">{{ offer.upgradeType }}</div>
+      </td>
+      <td>
+        <div class="offer-slider">
+          <input
+            type="range"
+            class="slider"
+            [min]="offer.minOffer"
+            [max]="offer.maxOffer"
+            [(ngModel)]="offer.currentOffer"
+          />
+          <div class="slider-value">
+            ${{ offer.currentOffer }}
+            <span class="per-passenger">per passenger</span>
+          </div>
+          <div class="slider-range">
+            <span>No Offer</span>
+            <span>${{ offer.maxOffer }}</span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="offer-strength" [ngClass]="getStrengthClass(getOfferStrength(offer))">
+          {{ getOfferStrength(offer) }}
+        </div>
+      </td>
+      <td>
+        <div class="competing-bids">
+          {{ offer.numberOfBids }} {{ offer.numberOfBids === 1 ? 'bid' : 'bids' }}
+        </div>
+      </td>
+      <td>
+        <button class="btn btn-primary confirm-button" (click)="confirmBid(offer)">Confirm</button>
+      </td>
+    </tr>
+
+    <!-- Display disabled rows -->
+    <tr *ngFor="let offer of getDisabledRows()" class="offer-row disabled-row">
+      <td>
+        <div class="flight-info">
+          <i class="bi bi-airplane flight-icon"></i>
+          <div>
+            <div class="flight-route">{{ offer.flight }}</div>
+            <div class="flight-details">{{ offer.flightDetails }}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="upgrade-type">{{ offer.upgradeType }}</div>
+      </td>
+      <td>
+        <div class="offer-slider">
+          <input type="range" class="slider" disabled />
+          <div class="slider-value">
+            ${{ offer.currentOffer }}
+            <span class="per-passenger">per passenger</span>
+          </div>
+          <div class="slider-range">
+            <span>No Offer</span>
+            <span>${{ offer.maxOffer }}</span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="offer-strength" [ngClass]="getStrengthClass(getOfferStrength(offer))">
+          No Offer
+        </div>
+      </td>
+      <td>
+        <div class="competing-bids">
+          {{ offer.numberOfBids }} {{ offer.numberOfBids === 1 ? 'bid' : 'bids' }}
+        </div>
+      </td>
+      <td>
+        <button class="btn btn-primary confirm-button" disabled>Confirm</button>
+      </td>
+    </tr>
+    </tbody>
+
+
+  </table>
+</div>

@@ -1,0 +1,30 @@
+<div class="offer-container">
+  <div class="flight-info">
+    <div>
+      <h4>{{ offer.flight }}</h4>
+      <p class="upgrade-type">{{ offer.upgradeType }}</p>
+    </div>
+    <div class="product-benefits">
+      <ul>
+        <li>Fully lie-flat bed</li>
+        <li>Adjustable headrest with neck massage</li>
+      </ul>
+    </div>
+  </div>
+  <div class="offer-details">
+    <label for="offerRange">Your Offer:</label>
+    <div class="offer-input">
+      <input
+        id="offerRange"
+        type="range"
+        [min]="offer.minOffer"
+        [max]="offer.maxOffer"
+        [(ngModel)]="offer.currentOffer"
+      />
+      <span>${{ offer.currentOffer }} CAD</span>
+    </div>
+    <div class="offer-strength">
+      <span>{{ offer.offerStrength }}</span>
+    </div>
+  </div>
+</div>
